@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <!-- Include CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Include JS file -->
+    <script src="{{ url_for('static', filename='upload_form.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Zipper Boy</h1>
+        <p>Upload a file and we will zip it for you</p>
+
+        <div class="file-upload mt-4">
+            <form action="/" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="files">Choose a file:</label>
+                    <input type="file" class="form-control-file" name="files" id="files" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Upload</button>
+            </form>
+        </div>
+
+        <div class="uploaded-files mt-4">
+            <h2>My uploaded files:</h2>
+            <ul class="list-group">
+                {% for file in files %}
+                    <li class="list-group-item">
+                        {{ file }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if zip_file_path %}
+            <div class="mt-4">
+                <h2>My zipped archives</h2>
+                <p>Click the link below to download the zipped file:</p>
+                <a href="{{ url_for('download', filename=zip_file_path) }}" class="btn btn-success" download>Download Zipped File</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
